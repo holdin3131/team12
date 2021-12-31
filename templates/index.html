@@ -1,34 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>인스타 로그인</title>
+    <link href="../static/login_common.css" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    <script src="{{ url_for('static', filename='static/login.js') }}" > </script>
-    <title>로그인 페이지</title>
-
-
-<script>
-function to_signup() {
-    window.location.href = "/signup"
-}
-
-
-
-</script>
-
-
-</head>
-  <body>
+  </head>
+  <link href="../static/login.css" rel="stylesheet" type="text/css" /> <body>
     <div class="main-container">
       <header class="logo">
         <div>
-          <img id="logoPicture" src="static/img/logo_text.png"/>
-<!--            저 이미지 파일을 못 찾겠음. 찾으면 static/img 폴더에 넣어주세요-->
-
+          <img class="logoPicture" src="static/img/logo_text.png" alt="인스타 로고" />
         </div>
       </header>
       <contant class="login-container">
@@ -46,11 +29,11 @@ function to_signup() {
     </div>
     <div class="join-container">
           <p class="join">계정이 없으신가요?
-            <a href="/signup" tabindex="0">
+           <a href="/signup" tabindex="0">
                 <span onclick = >가입하기</span>
             </a>
           </p>
     </div>
-    <script src="../static/css/login.js"></script>
+    <script src="login.js"></script>
   </body>
 </html>
