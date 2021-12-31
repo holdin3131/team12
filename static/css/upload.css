@@ -1,0 +1,79 @@
+body {
+  max-width: 720px;
+  /*전체 웹페이지에서 바디 가운데 정렬*/
+  margin: 0 auto;
+}
+
+/* 헤더 */
+#header {
+  /*헤더의아이콘들 가운데 정렬*/
+  display: flex;
+  /*헤더의아이콘들 사이에 간격 추가*/
+  justify-content: space-between;
+  background-color: white;
+
+  /*아이콘들의 위아래 정렬 기준(크기 다를 때 용이)*/
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  max-width: 720px;
+  border-bottom: 1px solid lightgray;
+}
+
+#header .header-icon {
+  margin: 3% 5%;
+  width: 6%;
+}
+#header #logo {
+  width: 27%;
+}
+
+/* 컨테이너 */
+#container {
+  padding-top: 12%;
+  padding-bottom: 1%;
+}
+
+/* 스토리 */
+#upload-container {
+  padding-left: 1%;
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid lightgray;
+
+}
+#picture-container {
+  height: 300px;
+  color: white;
+  padding-left: 1%;
+  background-color: black;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid lightgray;
+
+}
+#text-container {
+  height: 150px;
+  padding-left: 1%;
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid lightgray;
+}
+#new-upload {
+  display: none;
+}
+#blue-button {
+
+}
+
+#picture-container-wrapper{
+  color: white;
+}

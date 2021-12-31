@@ -1,0 +1,72 @@
+body{
+    margin :auto;
+    max-width : 375px;
+    max-height: 664px;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size : 12px
+}
+
+#sign_up_main{
+    margin :20px;
+    border-radius: 5px;
+    width : 375px;
+    height: 664px;
+    background-color: white;
+}
+
+#sign_up_main #sign_up_header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    font-weight: bold;
+    color: lightgray;
+    font-size: 1.2em;
+}
+#sign_up_main #sign_up_header > img{
+    width : 240px;
+}
+
+#sign_up_main #input_form_main{
+    margin : 20px 40px;
+    padding-top: 20px;
+    border-top: 2px solid lightgray;
+
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#sign_up_main #input_form_main .input_info{
+    margin: 10px 0;
+
+}
+
+#sign_up_main #input_form_main .input_info > input{
+
+    width : 200px
+    /*border-radius: 3px;*/
+}
+
+#sign_up_main #sign_up_button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#sign_up_main #sign_up_button > button{
+    width: 210px;
+    height: 20px;
+    border: none;
+    border-radius: 3px;
+    color : white;
+    background-color: deepskyblue;
+
+}

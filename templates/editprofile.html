@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>instagram-new profile</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_profile.css') }}">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
+    <script src="../static/css/new-profile.js"></script>
+</head>
+<body>
+<div id="main">
+    <div id="container">
+        <div id="header-container">
+            <div class="header">
+                <p>프로필 설정</p>
+            </div>
+        </div>
+        <div id="photo-container">
+            <div class="photo-wrapper">
+                <img src="../static/img/profile-image.jpeg">
+                <a id="photo-change" style="cursor:pointer;" onclick="alert('사진 변경하기')" target="_blank"><strong>프로필 사진 변경</strong></a>
+            </div>
+
+
+        </div>
+        <div id="name-container">
+            <div class="name-wrapper">
+                <p>이름</p>
+                <input type="text" style="border: 1px solid #9c9c9c">
+            </div>
+        </div>
+        <div id="phone-container">
+            <div class="phone-wrapper">
+                <p>연락처</p>
+                <input type="text" style="border: 1px solid #9c9c9c">
+            </div>
+        </div>
+        <div id="bDate-container">
+            <div class="bDate-wrapper">
+                <img  src="static/img/brithday.png">
+
+                <p>생일 추가</p>
+                <div class="select-box">
+                    <select name="yy" id="year"></select>년
+                    <select name="mm" id="month"></select>월
+                    <select name="dd" id="day"></select>일
+                </div>
+            </div>
+        </div>
+        <div id="gender-container">
+            <div class="gender-wrapper">
+                <p>성별</p>
+                <div class="radio-box">
+                    <input type="radio" name="gender" value="men">남
+                    <input type="radio" name="gender" value="woman">여
+                    <input type="radio" name="gender" value="none">밝히고 싶지 않음
+                </div>
+            </div>
+        </div>
+        <button class="submit-btn" style="cursor:pointer;" onclick="alert('제출 되었습니다.')">제출</button>
+        <div></div>
+    </div>
+</div>
+</body>
+</html>

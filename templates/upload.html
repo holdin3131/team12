@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+    <title>UPLOAD</title>
+</head>
+<script>
+  function posting() {
+    let title = $('#title').val()
+    let file = $('#file')[0].files[0]
+    let form_data = new FormData()
+
+    form_data.append("title_give", title)
+    form_data.append("file_give", file)
+
+    $.ajax({
+        type: "POST",
+        url: "/fileupload",
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            alert(response["result"])
+            window.location.reload()
+        }
+    });
+
+
+  }
+
+  function find_img() {
+      let title = $('#find_title').val()
+      document.getElementById('link').href = '/fileshow/' + title
+  }
+
+  function close_box() {
+
+      $('#blue-button').hide()
+      $('#new-upload').show()
+  }
+</script>
+
+<body>
+    <div id="main">
+        <div id="header">
+            <img id="logo" src="static/img/insta-logo.png" />
+        </div>
+        <div id="container">
+            <div id="upload-container">
+                <div id="upload-wrapper">
+                    <div id="left-upload-wrapper">
+                        <div class="file-upload">
+                            <input style="width:300px;" type="text" id="title" placeholder="업로드할 이미지 제목을 입력해주세요">
+                            <input type="file" id="file" >
+                        </div>
+                    </div>
+                    <div id = "right-upload-wrapper" >
+                        <button onclick="posting()">업로드</button>
+                    </div>
+                </div>
+            </div>
+            <div id = "picture-container">
+                <div id= "picture-container-wrapper">
+                    <div>
+                        <div>
+                            <img id="new-upload" src="data:image/png;base64, {{ img }}">
+                            <div class="mybutton" id="blue-button">
+                                <button onclick="close_box()" type="button" class="btn btn-primary">미리보기</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="text-container">
+                <div id="text-container-wrapper">
+                    <h1>사진을 설명하는 입력하는 곳~</h1>
+                    <button onclick="DB에 사진과 입력정보, 작성자 업로드" type="button" class="btn btn-outline-primary">게시하기</button>
+                    <button onclick="입력한 텍스트 초기화" type="button" class="btn btn-outline-primary">지우기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</body>
+</html>
