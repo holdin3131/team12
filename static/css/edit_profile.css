@@ -1,0 +1,186 @@
+body {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+#main {
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    padding: 10vw 8vw;
+}
+
+#container:after {
+    content: "";
+    display: block;
+
+}
+
+#container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dcdcdc;
+    border-radius: 1%;
+    position: relative;
+    box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.25);
+}
+
+#header-container {
+    margin-top: 3vw;
+    position: relative;
+}
+
+#header-container .header p {
+
+    font-size: 20px;
+    color: #363636;
+}
+
+#photo-container {
+
+    width: 50px;
+    position: relative;
+
+}
+
+#photo-container .photo-wrapper {
+    width: auto;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#photo-container .photo-wrapper img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+
+}
+
+#photo-container .photo-wrapper a {
+    font-size: 12px;
+    width: 90px;
+    color: #0095f6;
+    background-color: white;
+    text-align: center;
+    text-decoration-line: none;
+}
+
+#name-container .name-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#name-container .name-wrapper p {
+    font-size: 15px;
+    padding-right: 15px;
+    color: #696969;
+
+}
+
+#name-container .name-wrapper input {
+    height: 1.2em;
+    outline: none;
+    border-radius: 3px;
+}
+
+#phone-container .phone-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#phone-container .phone-wrapper p {
+    font-size: 15px;
+    align-items: center;
+    padding-right: 5px;
+    color: #696969;
+}
+
+#phone-container .phone-wrapper input {
+    height: 1.2em;
+    outline: none;
+    border-radius: 3px;
+
+}
+
+#bDate-container .bDate-wrapper {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#bDate-container .bDate-wrapper p {
+    font-size: 15px;
+    align-items: center;
+    padding-right: 5px;
+    color: #696969;
+}
+
+#bDate-container .bDate-wrapper input {
+    height: 1.4em;
+    align-items: center;
+}
+
+#bDate-container .bDate-wrapper .select-box {
+    font-size: 15px;
+    color: #696969;
+    margin-top: -5px;
+}
+
+#bDate-container .bDate-wrapper .select-box select {
+    font-size: 13px;
+    color: #696969;
+}
+
+#gender-container .gender-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+#gender-container .gender-wrapper p {
+    font-size: 15px;
+    color: #696969;
+}
+
+#gender-container .gender-wrapper .radio-box {
+    margin-top: -5px;
+    font-size: 13px;
+    color: #696969;
+}
+
+#gender-container .gender-wrapper .radio-box input {
+    margin: 0 10px;
+}
+
+.submit-btn {
+    box-shadow: inset 0px -3px 7px 0px #29bbff;
+    background: linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+    background-color: #2dabf9;
+    border-radius: 3px;
+    border: 1px solid #29bbff;
+    display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+    font-size: 13px;
+    text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+    padding: 10px 60px;
+    margin: 50px 0;
+}
+.submit-btn:hover {
+    background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+	background-color:#0688fa;
+}
+

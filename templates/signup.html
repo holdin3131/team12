@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>회워가입 페이지</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signup.css') }}">
+
+
+</head>
+<body>
+    <div id="sign_up_main">
+
+        <div id='sign_up_header'>
+
+            <img src="static/img/insta-logo.png" alt="insta-logo">
+            <p>친구들의 사진과 동영상을 보려면 가입하세요.</p>
+
+        </div>
+
+        <div id="input_form_main">
+
+            <div id="get_email" class="input_info">
+                <input type="email">
+            </div>
+            <div id="get_name" class="input_info">
+                <input type="text">
+            </div>
+            <div id="get_user_name" class="input_info">
+                <input type="text">
+            </div>
+            <div id="get_password" class="input_info">
+                <input type="password">
+            </div>
+
+        </div>
+        <div id ='sign_up_button'>
+            <button type="submit">가입</button>
+        </div>
+
+
+
+    </div>
+
+</body>
+</html>

@@ -25,6 +25,10 @@ def main():
 def signup():
     return render_template("signup.html")
 
+@app.route('/profile')
+def edit_profile():
+    return render_template("editprofile.html")
+
 @app.route('/upload')
 def upload_page():
     img_info = list(db.camp2.find({}))[-1]
