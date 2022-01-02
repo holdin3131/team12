@@ -25,18 +25,28 @@ def main():
 def signup():
     return render_template("signup.html")
 
+@app.route('/main')
+def main_page():
+    return render_template("main.html")
+
+
+
 @app.route('/profile')
 def edit_profile():
     return render_template("editprofile.html")
 
 @app.route('/upload')
-def upload_page():
-    img_info = list(db.camp2.find({}))[-1]
-    img_binary = fs.get(img_info['img'])
-    # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
-    base64_data = codecs.encode(img_binary.read(), 'base64')
-    image = base64_data.decode('utf-8')
-    return render_template('upload.html',img=image)
+def upload():
+    return render_template("upload.html")
+
+# @app.route('/upload')
+# def upload_page():
+#     img_info = list(db.camp2.find({}))[-1]
+#     img_binary = fs.get(img_info['img'])
+#     # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
+#     base64_data = codecs.encode(img_binary.read(), 'base64')
+#     image = base64_data.decode('utf-8')
+#     return render_template('upload.html',img=image)
 
 
 # 방식2 : DB에 이미지 파일 자체를 올리는 방식
