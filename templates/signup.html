@@ -1,73 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}" />
-    <script src="{{ url_for('static', filename='signup.js') }}" > </script>
-
-    <title>회원가입</title>
-<!--    <link href="signup_common.css" rel="stylesheet" type="text/css" />-->
-
-
-<!--    JS-->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script defer src="../static/signup.js"></script>
+    <link href="../static/signup.css" rel="stylesheet" type="text/css"/>
+    <title>회원가입</title>
+    <!--    <link href="signup_common.css" rel="stylesheet" type="text/css" />-->
 
-    <script>
-      function register(){
-        $.ajax({
-                    type: "POST",
-                    url: "/api/register",
-                    data: {
-                        id_give: $('#userid').val(),
-                        pw_give: $('#userpw').val(),
-                        nickname_give: $('#usernick').val()
-                    },
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            alert('회원가입이 완료되었습니다.')
-                            window.location.href = '/login'
-                        } else {
-                            alert(response['msg'])
-                        }
-                    }
-                })
-      }
-
-    </script>
-  </head>
-  <body>
-    <div class="main-container">
-      <header class="logo">
+</head>
+<body>
+<div class="main-container">
+    <header class="logo">
         <div>
-          <img class="logoPicture" src="static/img/logo_text.png" alt="인스타 로고" />
+            <img class="logoPicture" src="../static/img/logo_text.png" alt="인스타 로고"/>
         </div>
-      </header>
-      <contant class="login-container">
-        <input
-          type="id"
-          class="id"
-          placeholder="휴대폰 번호 또는 이메일 주소"
-        />
-        <input type="fullname" class="fullname" placeholder="성명" />
-        <input type="username" class="username" placeholder="사용자 이름" />
-        <input type="password" class="password" placeholder="비밀번호" />
-        <button class="loginBtn">가입</button>
-      </contant>
-      <footer>
-          <a href="#" tabindex="0">비밀번호를 잊으셨나요 ?</a>
-      </footer>
+    </header>
+    <div class="login-container">
+        <input type="text"  id="userid" placeholder="휴대폰 번호 또는 이메일 주소"/>
+        <input type="text"  id="fullname" placeholder="성명"/>
+        <input type="text"  id="username" placeholder="사용자 이름"/>
+        <input type="text"  id="userpw" placeholder="비밀번호"/>
+        <button class="loginBtn" onclick="register()">가입</button>
     </div>
-    <div class="join-container">
-          <p class="join">계정이 있으신가요?
-           <a href="/" tabindex="0">
-                <span onclick = >로그인</span>
-            </a>
-          </p>
-    </div>
-    <script src="login.js"></script>
-  </body>
+<!--    <footer>-->
+<!--        <a href="#" tabindex="0">비밀번호를 잊으셨나요 ?</a>-->
+<!--    </footer>-->
+</div>
+<div class="join-container">
+    <p class="join">계정이 있으신가요?
+        <a>
+            <span onclick="login_page()">로그인</span>
+        </a>
+    </p>
+</div>
+</body>
 </html>

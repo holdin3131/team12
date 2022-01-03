@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>repl.it</title>
-    <link href="../static/login_common.css" rel="stylesheet" type="text/css" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script defer src="../static/login.js"></script>
+    <link href="../static/login.css" rel="stylesheet" type="text/css"/>
+    <title>로그인</title>
+    <!--    <link href="../static/login_common.css" rel="stylesheet" type="text/css"/>-->
+</head>
 
-  </head>
-  <link href="../static/login.css" rel="stylesheet" type="text/css" /> <body>
-    <div class="main-container">
-      <header class="logo">
+<body>
+<div class="main-container">
+    <header class="logo">
         <div>
-          <img class="logoPicture" src="static/img/logo_text.png" alt="인스타 로고" />
+            <img class="logoPicture" src="../static/img/logo_text.png" alt="인스타 로고"/>
         </div>
-      </header>
-      <contant class="login-container">
-        <input
-          type="id"
-          class="id"
-          placeholder="전화번호,사용자 이름 또는 이메일"
-        />
-        <input type="password" class="password" placeholder="비밀번호" />
-        <button class="loginBtn">로그인</button>
-      </contant>
-      <footer>
-          <a href="#" tabindex="0">비밀번호를 잊으셨나요 ?</a>
-      </footer>
+    </header>
+    <div class="login-container">
+        <input type="text" id="userid" placeholder="전화번호, 사용자 이름 또는 이메일"/>
+        <input type="password" id="userpw" placeholder="비밀번호"/>
+        <button class="loginBtn" onclick="login()">로그인</button>
     </div>
-    <div class="join-container">
-          <p class="join">계정이 없으신가요?
-           <a href="/signup" tabindex="0">
-                <span onclick = >가입하기</span>
-            </a>
-          </p>
+    <footer>
+        <a id="find-pw" href="#" tabindex="0">비밀번호를 잊으셨나요?</a>
+    </footer>
+</div>
+<div class="join-container">
+    <div class="join-wrapper">
+        <p>계정이 없으신가요?</p>
+        <a><span class="joinBtn" onclick="signup_page()" >가입하기</span></a>
     </div>
-    <script src="login.js"></script>
-  </body>
+</div>
+
+</body>
+
 </html>
