@@ -12,7 +12,7 @@ function login() {
                 $.cookie('mytoken', response['token']);
 
                 alert('로그인 완료!')
-                window.location.href = '/'
+                window.location.href = '/main'
             } else {
                 alert(response['msg'])
             }

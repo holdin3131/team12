@@ -8,11 +8,12 @@ import certifi
 
 app = Flask(__name__)
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.dik82.mongodb.net/Cluster0?retryWrites=true&w=majority',
+client = MongoClient('mongodb+srv://test:sparta@cluster0.5huhb.mongodb.net/Cluster0?retryWrites=true&w=majority',
                      tlsCAFile=certifi.where())
 db2 = client.db12team
 
 SECRET_KEY = 'SPARTA'
+fs = gridfs.GridFS(db2)
 import jwt
 import datetime
 import hashlib
@@ -26,18 +27,39 @@ def check_token():
     return db.user.find_one({'id': payload['id']}, {'_id': False})
 
 
-@app.route('/')
+@app.route('/main')
 def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db2.user.find_one({"id": payload['id']})
-        return render_template('main(example).html', username=user_info["username"])
+        img_name = list(db2.img_info.find({}))
+        print(img_name)
+
+        img_binaries = []
+
+        for i in img_name:
+            img_binary = fs.get(i['img'])
+            # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
+            base64_data = codecs.encode(img_binary.read(), 'base64')
+            image = base64_data.decode('utf-8')
+            img_binaries.append({'title':i['title'],'image':image,'writer':i['writer'],'description':i['description']})
+
+
+        return render_template('main.html', username=user_info["username"], img=img_binaries )
+
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
+@app.route('/main', methods = ["GET"])
+def username_info():
+    users_pic = list(db2.img_info.find({}, {'_id': False}))
+
+
+
+    return jsonify({'users': users_pic})
 
 @app.route('/login')
 def login():
@@ -72,13 +94,16 @@ def api_login():
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
     result = db2.user.find_one({'id': id_receive, 'pw': pw_hash})
+
     if result is not None:
         payload = {
             'id': id_receive,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1500)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        db2.last_login.insert_one({'id': id_receive})
         return jsonify({'result': 'success', 'token': token})
+
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
@@ -103,24 +128,19 @@ def api_valid():
 
 
 
-#################################
-##  HTML을 주는 부분             ##
-#################################
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.5huhb.mongodb.net/Cluster0?retryWrites=true&w=majority',
-                     tlsCAFile=certifi.where())
-db = client.dbsparta
-fs = gridfs.GridFS(db)
 
 
 @app.route('/')
 def main():
-    return render_template("index.html")
+    return render_template("login.html")
 
 
 @app.route('/main')
 def main_page():
+
     return render_template("main.html")
+
 
 
 
@@ -128,59 +148,51 @@ def main_page():
 def edit_profile():
     return render_template("editprofile.html")
 
+
 @app.route('/upload')
-def upload():
-    return render_template("upload.html")
+def img_upload():
+    img_name = list(db2.img_info.find({}))[-1]
+    img_binary = fs.get(img_name['img'])
+    # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
+    base64_data = codecs.encode(img_binary.read(), 'base64')
+    image = base64_data.decode('utf-8')
 
-# @app.route('/upload')
-# def upload_page():
-#     img_info = list(db.camp2.find({}))[-1]
-#     img_binary = fs.get(img_info['img'])
-#     # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
-#     base64_data = codecs.encode(img_binary.read(), 'base64')
-#     image = base64_data.decode('utf-8')
-#     return render_template('upload.html',img=image)
-
+    return render_template("upload.html", img = image)
 
 # 방식2 : DB에 이미지 파일 자체를 올리는 방식
 @app.route('/fileupload', methods=['POST'])
 def file_upload():
     title_receive = request.form['title_give']
     file = request.files['file_give']
+    # writer = list(db2.last_login.find({}))[-1]
     # gridfs 활용해서 이미지 분할 저장
     fs_image_id = fs.put(file)
-
+    last_login = list(db2.last_login.find({}))[-1]
+    writer = last_login['id']
+    writer_id = db2.user.find_one({'id':writer})
+    writer_name = writer_id['username']
+    img_list = list(db2.img_info.find({}, {'_id': False}))
+    count = len(img_list) + 1
     # db 추가
     doc = {
         'title': title_receive,
-        'img': fs_image_id
+        'img': fs_image_id,
+        'img_num': count,
+        'writer':writer_name
     }
-    db.camp2.insert_one(doc)
-
+    # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
+    db2.img_info.insert_one(doc)
     return jsonify({'result':'success'})
 
-# 주소에다가 /fileshow/이미지타이틀 입력하면 그 이미지타이틀을 title이라는 변수로 받아옴
-@app.route('/fileshow/<title>')
-def file_show(title):
-    # title은 현재 이미지타이틀이므로, 그것을 이용해서 db에서 이미지 '파일'을 가지고 옴
-    img_info = db.camp2.find_one({'title': title})
-    img_binary = fs.get(img_info['img'])
-    # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
-    base64_data = codecs.encode(img_binary.read(), 'base64')
-    image = base64_data.decode('utf-8')
-    # 해당 이미지의 데이터를 jinja 형식으로 사용하기 위해 넘김
-    return render_template('showimg.html', img=image)
+@app.route('/feedupload', methods=['POST'])
+def feed_upload():
+    last_img = list(db2.img_info.find({}))[-1]
 
-# @app.route('/')
-# def file_show2():
-#     # title은 현재 이미지타이틀이므로, 그것을 이용해서 db에서 이미지 '파일'을 가지고 옴
-#     img_info = list(db.camp2.find({}))[-1]
-#     img_binary = fs.get(img_info['img'])
-#     # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
-#     base64_data = codecs.encode(img_binary.read(), 'base64')
-#     image = base64_data.decode('utf-8')
-#     # 해당 이미지의 데이터를 jinja 형식으로 사용하기 위해 넘김
-#     return render_template('index.html', img=image)
+    description = request.form['description_give']
+
+    db2.img_info.update_one(last_img, {'$set': {'description': description}} )
+    return jsonify({'result':'success'})
+    return render_template("main.html")
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

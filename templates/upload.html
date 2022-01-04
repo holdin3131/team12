@@ -10,7 +10,7 @@
     <title>UPLOAD</title>
 </head>
 <script>
-  function posting() {
+  function view() {
     let title = $('#title').val()
     let file = $('#file')[0].files[0]
     let form_data = new FormData()
@@ -30,15 +30,34 @@
             window.location.reload()
         }
     });
+  }
+  function posting() {
+
+    let description = $('#description').val()
+    let form_data = new FormData()
 
 
+    form_data.append("description_give", description)
+
+    $.ajax({
+        type: "POST",
+        url: "/feedupload",
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            alert(response["result"])
+            window.location.reload()
+        }
+    });
   }
 
-  function find_img() {
-      let title = $('#find_title').val()
-      document.getElementById('link').href = '/fileshow/' + title
-  }
 
+  // function find_img() {
+  //
+  //     document.getElementById('blue-button').href = '/fileshow
+  // }
   function close_box() {
 
       $('#blue-button').hide()
@@ -61,7 +80,7 @@
                         </div>
                     </div>
                     <div id = "right-upload-wrapper" >
-                        <button onclick="posting()">업로드</button>
+                        <button onclick="view()">업로드</button>
                     </div>
                 </div>
             </div>
@@ -69,21 +88,24 @@
                 <div id= "picture-container-wrapper">
                     <div>
                         <div>
-                            <img id="new-upload" src="data:image/png;base64, {{ img }}">
-                            <div class="mybutton" id="blue-button">
+                            <img id = "new-upload", src="data:image/png;base64, {{ img }}">
+                            <div id="blue-button">
                                 <button onclick="close_box()" type="button" class="btn btn-primary">미리보기</button>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
             <div id="text-container">
                 <div id="text-container-wrapper">
-                    <h1>사진을 설명하는 입력하는 곳~</h1>
-                    <button onclick="DB에 사진과 입력정보, 작성자 업로드" type="button" class="btn btn-outline-primary">게시하기</button>
-                    <button onclick="입력한 텍스트 초기화" type="button" class="btn btn-outline-primary">지우기</button>
+                    <textarea class="form-control" placeholder="Description" id="description" style=" width: 600 px; height: 100px">
+                    </textarea>
                 </div>
+                <div id="button-container-wrapper">
+                <button onclick="posting()" type="button" class="btn btn-outline-primary">게시하기</button>
+
+                </div>
+
             </div>
         </div>
     </div>
