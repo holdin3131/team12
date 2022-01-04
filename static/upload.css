@@ -1,5 +1,5 @@
 body {
-  max-width: 720px;
+  max-width: 600px;
   /*전체 웹페이지에서 바디 가운데 정렬*/
   margin: 0 auto;
 }
@@ -16,7 +16,7 @@ body {
   align-items: center;
   width: 100%;
   position: fixed;
-  max-width: 720px;
+  max-width: 600px;
   border-bottom: 1px solid lightgray;
 }
 
@@ -46,7 +46,7 @@ body {
 
 }
 #picture-container {
-  height: 300px;
+  height: 600px;
   color: white;
   padding-left: 1%;
   background-color: black;
@@ -61,7 +61,7 @@ body {
   height: 150px;
   padding-left: 1%;
   background-color: #f6f6f6;
-
+  display: flex;
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
@@ -69,8 +69,12 @@ body {
 }
 #new-upload {
   display: none;
+  width: 600px;
+  height: auto
 }
+#blue-button {
 
+}
 
 #picture-container-wrapper{
   color: white;

@@ -10,10 +10,10 @@ app = Flask(__name__)
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.5huhb.mongodb.net/Cluster0?retryWrites=true&w=majority',
                      tlsCAFile=certifi.where())
-db2 = client.db12team
+db = client.db12team
 
 SECRET_KEY = 'SPARTA'
-fs = gridfs.GridFS(db2)
+fs = gridfs.GridFS(db)
 import jwt
 import datetime
 import hashlib
@@ -32,8 +32,8 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db2.user.find_one({"id": payload['id']})
-        img_name = list(db2.img_info.find({}))
+        user_info = db.user.find_one({"id": payload['id']})
+        img_name = list(db.img_info.find({}))
         print(img_name)
 
         img_binaries = []
@@ -55,7 +55,7 @@ def home():
 
 @app.route('/main', methods = ["GET"])
 def username_info():
-    users_pic = list(db2.img_info.find({}, {'_id': False}))
+    users_pic = list(db.img_info.find({}, {'_id': False}))
 
 
 
@@ -81,7 +81,7 @@ def api_signup():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    db2.user.insert_one({'id': id_receive, 'pw': pw_hash, 'fullname': fullname_receive, 'username': username_receive})
+    db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'fullname': fullname_receive, 'username': username_receive})
 
     return jsonify({'result': 'success'})
 
@@ -93,15 +93,15 @@ def api_login():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    result = db2.user.find_one({'id': id_receive, 'pw': pw_hash})
+    result = db.user.find_one({'id': id_receive, 'pw': pw_hash})
 
     if result is not None:
         payload = {
             'id': id_receive,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1500)
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        db2.last_login.insert_one({'id': id_receive})
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+        db.last_login.insert_one({'id': id_receive})
         return jsonify({'result': 'success', 'token': token})
 
     else:
@@ -117,7 +117,7 @@ def api_valid():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         print(payload)
 
-        userinfo = db2.user.find_one({'id': payload['id']}, {'_id': 0})
+        userinfo = db.user.find_one({'id': payload['id']}, {'_id': 0})
         return jsonify({'result': 'success', 'username': userinfo['username']})
     except jwt.ExpiredSignatureError:
 
@@ -151,7 +151,7 @@ def edit_profile():
 
 @app.route('/upload')
 def img_upload():
-    img_name = list(db2.img_info.find({}))[-1]
+    img_name = list(db.img_info.find({}))[-1]
     img_binary = fs.get(img_name['img'])
     # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
     base64_data = codecs.encode(img_binary.read(), 'base64')
@@ -167,11 +167,11 @@ def file_upload():
     # writer = list(db2.last_login.find({}))[-1]
     # gridfs 활용해서 이미지 분할 저장
     fs_image_id = fs.put(file)
-    last_login = list(db2.last_login.find({}))[-1]
+    last_login = list(db.last_login.find({}))[-1]
     writer = last_login['id']
-    writer_id = db2.user.find_one({'id':writer})
+    writer_id = db.user.find_one({'id':writer})
     writer_name = writer_id['username']
-    img_list = list(db2.img_info.find({}, {'_id': False}))
+    img_list = list(db.img_info.find({}, {'_id': False}))
     count = len(img_list) + 1
     # db 추가
     doc = {
@@ -181,16 +181,16 @@ def file_upload():
         'writer':writer_name
     }
     # html 파일로 넘겨줄 수 있도록, base64 형태의 데이터로 변환
-    db2.img_info.insert_one(doc)
+    db.img_info.insert_one(doc)
     return jsonify({'result':'success'})
 
 @app.route('/feedupload', methods=['POST'])
 def feed_upload():
-    last_img = list(db2.img_info.find({}))[-1]
+    last_img = list(db.img_info.find({}))[-1]
 
     description = request.form['description_give']
 
-    db2.img_info.update_one(last_img, {'$set': {'description': description}} )
+    db.img_info.update_one(last_img, {'$set': {'description': description}} )
     return jsonify({'result':'success'})
     return render_template("main.html")
 

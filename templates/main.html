@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="../static/main.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script defer src="../static/main.js"></script>
+    <link href="../static/main.css" rel="stylesheet" type="text/css" />
+
     <title>MAIN</title>
 
 <script>
@@ -21,9 +23,8 @@
     <div id="main">
         <div id="header">
             <img id="logo" src="static/img/insta-logo.png" />
-            <a href="/profile" tabindex="0">
-                <span onclick = >로그아웃</span>
-            </a>
+            <button  class="logout" onclick="logout()">로그아웃</button>
+
 
         </div>
         <div id="container">
